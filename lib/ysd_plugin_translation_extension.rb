@@ -57,22 +57,22 @@ module Huasi
     #
     #
     def routes(context={})
-    
-      routes = [{:path => '/traslate/content/:content_id',
+   
+      routes = [{:path => '/translate/content/:content_id',
                  :parent_path => '/content-management',
-                 :regular_expression => /^\/traslate\/content\/.+/, 
+                 :regular_expression => /^\/translate\/content\/.+/, 
                  :title => 'Content translation', 
                  :description => 'Translate a content',
                  :fit => 1,
                  :module => :translation },
-                {:path => '/traslate/menuitem/:menuitem_id',
-                 :regular_expression => /^\/traslate\/menuitem\/.+/, 
+                {:path => '/translate/menuitem/:menuitem_id',
+                 :regular_expression => /^\/translate\/menuitem\/.+/, 
                  :title => 'Menu item translation', 
                  :description => 'Translate a menu item',
                  :fit => 1,
                  :module => :translation },                 
-                {:path => '/traslate/term/:term_id',
-                 :regular_expression => /^\/traslate\/term\/.+/,                  
+                {:path => '/translate/term/:term_id',
+                 :regular_expression => /^\/translate\/term\/.+/,                  
                  :title => 'Term translation',
                  :description => 'Translate a term.',
                  :fit => 1,
