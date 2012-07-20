@@ -1,0 +1,27 @@
+<script type="text/javascript">
+
+   ContentTranslatePlugin = function() {
+
+     this.onRender = function(entity) {
+     
+       var self = this;
+       
+       $('#content_translate').bind('click', 
+             function event(event) {
+               window.location.href = '/translate/content/' + entity.key;	
+             });
+     	
+     }
+
+   }
+   
+          
+   if (typeof YSD.entityManagement.complementHooks != 'undefined') {
+	
+     var contentTranslatePlugin = new ContentTranslatePlugin();
+    
+     YSD.entityManagement.complementHooks.register(contentTranslatePlugin);	
+   
+   }          
+       
+</script>
