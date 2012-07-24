@@ -8,7 +8,7 @@
        
        $('#content_translate').bind('click', 
              function event(event) {
-               window.location.href = '/translate/content/' + entity.key;	
+               window.location.href = '/translate/content/' + entity.key + '?destination=/content-management/' + entity.key;	
              });
      	
      }

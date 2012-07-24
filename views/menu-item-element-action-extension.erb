@@ -1,0 +1,27 @@
+<script type="text/javascript">
+
+   MenuItemTranslatePlugin = function() {
+
+     this.onRender = function(entity) {
+     
+       var self = this;
+       
+       $('#menu_item_translate').bind('click', 
+             function event(event) {
+               window.location.href = '/translate/menuitem/' + entity.id + '?destination=/menu-item-management/' + entity.id; //TODO menu_name	
+             });
+     	
+     }
+
+   }
+   
+          
+   if (typeof YSD.entityManagement.complementHooks != 'undefined') {
+	
+     var menuItemTranslatePlugin = new MenuItemTranslatePlugin();
+    
+     YSD.entityManagement.complementHooks.register(menuItemTranslatePlugin);	
+   
+   }          
+       
+</script>

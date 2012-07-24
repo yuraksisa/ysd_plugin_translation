@@ -1,0 +1,27 @@
+<script type="text/javascript">
+
+   TermTranslatePlugin = function() {
+
+     this.onRender = function(entity) {
+     
+       var self = this;
+       
+       $('#term_translate').bind('click', 
+             function event(event) {
+               window.location.href = '/translate/term/' + entity.id + '?destination=/term-management/' + entity.id; //TODO Taxonomy id	 
+             });
+     	
+     }
+
+   }
+   
+          
+   if (typeof YSD.entityManagement.complementHooks != 'undefined') {
+	
+     var termTranslatePlugin = new TermTranslatePlugin();
+    
+     YSD.entityManagement.complementHooks.register(termTranslatePlugin);	
+   
+   }          
+       
+</script>
