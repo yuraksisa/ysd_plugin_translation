@@ -21,7 +21,7 @@ module Huasi
                                                                 {:description => 'English'})                                                       
        
         SystemConfiguration::Variable.first_or_create({:name => 'default_language'}, 
-                                                      {:value => 'es'}) 
+                                                      {:value => 'es', :description => 'Default site language', :module => :translation}) 
        
                                                               
     end
