@@ -20,7 +20,7 @@ module Huasi
                    translate_url << "?destination=#{app.request.path_info}"
                  end
                  
-                 app.render_content_action_button({:link => translate_url, :text => t.app.content_action_button.translation})
+                 app.render_content_action_button({:link => translate_url, :text => app.t.content_action_button.translation})
                  
                else
                  ""
