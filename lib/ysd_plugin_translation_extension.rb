@@ -164,34 +164,23 @@ module Huasi
 
     end
 
-
-    # ========= Content extension ===========
+    # ========= Aspects ==================
     
     #
-    # Content element action
+    # Manages the resource access control
     #
-    def content_element_action(context={})
-    
-      app = context[:app]
-      
-      app.render_element_action_button({:title => app.t.content_action_button.translate, 
-                                        :text  => app.t.content_action_button.translate, 
-                                        :id    => 'content_translate' })
-    
-    end
-    
+    # The attachment aspect (complement)
     #
-    # Content element action extension
-    #
-    def content_element_action_extension(context={})
+    def aspects(context={})
       
       app = context[:app]
       
-      template_path = File.join(File.dirname(__FILE__), '..', 'views', "content-element-action-extension.erb")
-      template = Tilt.new(template_path)
-      template.render(app)    
-    
-    end
+      aspects = []
+      aspects << ::Plugins::Aspect.new(:translation, app.t.aspect.translate, [:entity], TranslationAspectDelegate.new)
+                                               
+      return aspects
+       
+    end 
 
     # ========= Term extension ==============
     

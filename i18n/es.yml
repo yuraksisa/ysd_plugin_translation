@@ -2,3 +2,5 @@ system_admin_menu:
   languages: Idiomas
 content_action_button:
   translate: Traducir
+aspect:
+  translate: Traducir
