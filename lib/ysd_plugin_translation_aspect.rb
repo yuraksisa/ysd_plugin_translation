@@ -20,7 +20,7 @@ module Huasi
                    translate_url << "?destination=#{app.request.path_info}"
                  end
                  
-                 app.render_content_action_button({:link => translate_url, :text => app.t.content_action_button.translation})
+                 app.render_content_action_button({:link => translate_url, :text => app.t.content_action_button.translate})
                  
                else
                  ""
@@ -34,7 +34,7 @@ module Huasi
     #
     # Content element action
     #
-    def element_action(context={})
+    def element_action(context={}, aspect_model)
     
       app = context[:app]
       
@@ -47,7 +47,7 @@ module Huasi
     #
     # Content element action extension
     #
-    def element_action_extension(context={})
+    def element_action_extension(context={}, aspect_model)
       
       app = context[:app]
       

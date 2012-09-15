@@ -1,8 +1,8 @@
-require 'sinatra/base'
-require 'sinatra/r18n'
+require 'sinatra/ysd_sinatra_translation'
+require 'sinatra/ysd_sinatra_translation_rest_api'
+require 'sinatra/ysd_sinatra_translation_language'
+require 'sinatra/ysd_sinatra_translation_language_rest_api'
 
-# Include the plugin files
 require 'ysd_plugin_translation_aspect'
-require 'ysd_plugin_translation_middleware'
 require 'ysd_plugin_translation_extension'
 require 'ysd_plugin_translation_init'
