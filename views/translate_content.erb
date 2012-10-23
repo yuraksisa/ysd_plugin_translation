@@ -83,6 +83,9 @@
 
 <script type="text/javascript">
 
+require(['jquery','YSDEntityManagement', 'YSDRemoteDataSource', 'YSDSelectSelector'],
+        function($, EntityManagement, RemoteDataSource, SelectSelector) {
+
   function ContentTranslationHook() {
  	   
   	this.onEdit = function(entity) {
@@ -103,9 +106,9 @@
     
     this.configForm = function(entity) {       
     
-      var dataSource = new YsdForms.RemoteDataSource('/translationlanguages',{id:'code', description:'description'});
+      var dataSource = new RemoteDataSource('/translationlanguages',{id:'code', description:'description'});
       var value = (this.entity && this.entity.language)?this.entity.language:'<%=language%>'; 
-      var selector = new YsdForms.SelectSelector('language', dataSource, value );
+      var selector = new SelectSelector('language', dataSource, value );
       
       $('#language').change(function(event) { 
       	  self.changeLanguage(event) 
@@ -115,9 +118,7 @@
     this.changeLanguage = function(event) {
       
       var language = $('#language option:selected').val();	
-      
-      // 
-      
+
     }
   	  	
   };
@@ -132,5 +133,7 @@
                                                {url_base: '/translate/content', action: 'edit'});
  
   $('.entity-title').html('Content translation');
+  
+ });
 
 </script>

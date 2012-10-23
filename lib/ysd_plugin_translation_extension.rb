@@ -59,7 +59,7 @@ module Huasi
     def routes(context={})
    
       routes = [{:path => '/translate/content/:content_id',
-                 :parent_path => '/content-management',
+                 :parent_path => '/mcontents',
                  :regular_expression => /^\/translate\/content\/.+/, 
                  :title => 'Content translation', 
                  :description => 'Translate a content',
@@ -136,7 +136,7 @@ module Huasi
                                                :title => 'Translation menu', 
                                                :description => 'Language translation menu'})
           
-            menu_item_translation = Site::MenuItem.new({:title => session_language.description, 
+            menu_item_translation = Site::MenuItem.new({:title => "#{app.t.translation_menu.language}: #{session_language.description}", 
                                                         :module => :translation,
                                                         :menu => menu_translation})
           

@@ -37,7 +37,7 @@ module Huasi
     def element_action(context={}, aspect_model)
     
       app = context[:app]
-      
+            
       app.render_element_action_button({:title => app.t.content_action_button.translate, 
                                         :text  => app.t.content_action_button.translate, 
                                         :id    => 'content_translate' })
