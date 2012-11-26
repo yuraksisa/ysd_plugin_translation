@@ -1,7 +1,7 @@
 <%= include('entity-management') %>
 
 <script type="text/tmpl" id="elements_title">
-    <%= t.language_management.title %>
+    <h2><%= t.language_management.title %></h2>
 </script>
 
 <script type="text/tmpl" id="elements_description">
@@ -61,9 +61,8 @@
 
           <div class="formrow">
             <label for="description" class="fieldtitle"><%= t.language_management.form.description.label %></label>
-            <textarea name="value" id="value" class="fieldcontrol" rows="5"><%% if (entity) { %><%%=entity.description%><%%}%></textarea>
+            <input type="text" maxlength="64" id="description" name="description" class="fieldcontrol" <%% if (entity) { %> value="<%%= entity.description %>" <%% } %> />
           </div>
-          <p style="text-align:right"> <span id="value_length"></span> <%= t.available_chars %> </p>
          
         </div>
         
@@ -109,15 +108,7 @@
         
     this.configForm = function(entity) {
              
-         // Limit the text area length
-         YSDForms.limit_text_area_content_size(document.getElementById('description'), 64, 
-            function (content_remain) {
-              document.getElementById('description_length').innerHTML = '<strong>' + content_remain + '</strong>';
-            }
-         );    
-
-
-         this.configValidation();
+      this.configValidation();
     	
     }
     

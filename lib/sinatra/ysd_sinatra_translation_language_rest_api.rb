@@ -32,6 +32,8 @@ module Sinatra
             status 200
             content_type :json
             {:data => data, :summary => {:total => total}}.to_json
+
+          end
         
         end
                 
@@ -61,10 +63,11 @@ module Sinatra
           request.body.rewind
           language_request = JSON.parse(URI.unescape(request.body.read))
           
-          language = Model::Translation::TranslationLanguage.get(language_request[:code])
-          language.attributes=language_request
-          language.save
-          
+          if language = Model::Translation::TranslationLanguage.get(language_request['code'])
+            language.attributes=language_request
+            language.save
+          end
+
           status 200
           content_type :json
           language.to_json
@@ -79,8 +82,9 @@ module Sinatra
           request.body.rewind
           language_request = JSON.parse(URI.unescape(request.body.read))
           
-          language = Model::Translation::TranslationLanguage.get(params[:code])
-          language.destroy
+          if language = Model::Translation::TranslationLanguage.get(params['code'])
+            language.destroy
+          end
           
           status 200
           content_type :json
