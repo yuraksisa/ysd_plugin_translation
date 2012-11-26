@@ -9,8 +9,7 @@ Gem::Specification.new do |s|
 
   s.add_runtime_dependency "json"
   
-  s.add_runtime_dependency "ysd_plugin_site"              # Site builder
-  s.add_runtime_dependency "ysd_plugin_entitymanagement"  # Entity management
+  s.add_runtime_dependency "ysd_plugin_cms"               # Site builder
     
   s.add_runtime_dependency "ysd_md_translation"   # Translation model
    

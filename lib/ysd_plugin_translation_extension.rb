@@ -1,4 +1,5 @@
 require 'ysd-plugins_viewlistener' unless defined?Plugins::ViewListener
+require 'ysd_md_translatable'
 
 #
 # Site Extension
@@ -49,37 +50,6 @@ module Huasi
     
     end    
 
-    # ========= Routes ===================
-    
-    # routes
-    #
-    # Define the module routes, that is the url that allow to access the funcionality defined in the module
-    #
-    #
-    def routes(context={})
-   
-      routes = [{:path => '/translate/content/:content_id',
-                 :parent_path => '/mcontents',
-                 :regular_expression => /^\/translate\/content\/.+/, 
-                 :title => 'Content translation', 
-                 :description => 'Translate a content',
-                 :fit => 1,
-                 :module => :translation },
-                {:path => '/translate/menuitem/:menuitem_id',
-                 :regular_expression => /^\/translate\/menuitem\/.+/, 
-                 :title => 'Menu item translation', 
-                 :description => 'Translate a menu item',
-                 :fit => 1,
-                 :module => :translation },                 
-                {:path => '/translate/term/:term_id',
-                 :regular_expression => /^\/translate\/term\/.+/,                  
-                 :title => 'Term translation',
-                 :description => 'Translate a term.',
-                 :fit => 1,
-                 :module => :translation }]
-      
-    end
-
     # ========= Blocks =====================
 
     # Retrieve all the blocks defined in this module 
@@ -127,8 +97,6 @@ module Huasi
 
             locale = app.session[:locale] || SystemConfiguration::Variable.get_value('default_language')
             
-            puts "locale : #{app.session[:locale]}  default_language : #{SystemConfiguration::Variable.get_value('default_language')}"
-
             session_language = ::Model::Translation::TranslationLanguage.get(locale)
 
             # Defines the profile menu
@@ -163,82 +131,6 @@ module Huasi
       end
 
     end
-
-    # ========= Aspects ==================
     
-    #
-    # Manages the resource access control
-    #
-    # The attachment aspect (complement)
-    #
-    def aspects(context={})
-      
-      app = context[:app]
-      
-      aspects = []
-      aspects << ::Plugins::Aspect.new(:translation, app.t.aspect.translate, [:entity], TranslationAspectDelegate.new)
-                                               
-      return aspects
-       
-    end 
-
-    # ========= Term extension ==============
-    
-    #
-    # Term element action
-    #
-    def term_element_action(context={})
-    
-      app = context[:app]
-      
-      app.render_element_action_button({:title => app.t.content_action_button.translate,
-                                        :text  => app.t.content_action_button.translate,
-                                        :id    => 'term_translate'})
-    
-    end
-    
-    #
-    # Term element action extension
-    #
-    def term_element_action_extension(context={})
-    
-      app = context[:app]
-      
-      template_path = File.join(File.dirname(__FILE__), '..', 'views', "term-element-action-extension.erb")
-      template = Tilt.new(template_path)
-      template.render(app)
-      
-    end
-    
-    # ========= MenuItem extension ==========
-    
-    #
-    # Menu item element action
-    #    
-    def menu_item_element_action(context={})
-    
-      app = context[:app]
-      
-      app.render_element_action_button({:title => app.t.content_action_button.translate,
-                                        :text  => app.t.content_action_button.translate,
-                                        :id    => 'menu_item_translate'})
-
-    
-    end
-    
-    #
-    # Menu item element action extension
-    #
-    def menu_item_element_action_extension(context={})
-    
-      app = context[:app]
-      
-      template_path = File.join(File.dirname(__FILE__), '..', 'views', "menu-item-element-action-extension.erb")
-      template = Tilt.new(template_path)
-      template.render(app)
-    
-    end
-    
-
   end #TranslationExtension
 end #Huasi

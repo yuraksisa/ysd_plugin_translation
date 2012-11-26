@@ -1,0 +1,172 @@
+<%= include('entity-management') %>
+
+<script type="text/tmpl" id="elements_description">
+    <%= t.language_management.title %>
+</script>
+
+<script type="text/tmpl" id="elements_description">
+    <%= t.language_management.description %>
+</script>
+
+<!-- Renders the elements container -->
+<script type="text/tmpl" id="elements_container_template">
+
+  <table id="elements_table" class="table">
+     <thead class="table-header">
+       <tr>
+         <th class="table-header-title" scope="col" style="width:50%"><%= t.language_management.table.code %></th>
+         <th class="table-header-title" scope="col" style="width:50%"><%= t.language_management.table.description %></th>
+       </tr>
+     </thead>
+     <tbody id="elements_tbody" class="table-tbody">             
+     </tbody>
+  </table>
+
+</script>
+
+<!-- Renders one element in the elements list view -->
+        
+<script type="text/tmpl" id="elements_list_template">
+
+    <tr class="table-row element-navigation-detail" rel="<%%= index %>" id="element_row_<%%=index%>">
+      <td class="table-cell"><%%= entity.code %></td>
+      <td class="table-cell"><%%= entity.description %></td>
+    </tr>
+
+</script>
+
+<!-- Renders one element in the element view (full detailed) -->
+
+<script type="text/tmpl" id="element_template">
+
+     <div class="element_template" style="overflow:hidden">
+       <div class="entity-field"><div class="entity-fieldlabel"><%= t.language_management.form.code.label %></div> <div class="entity-fieldvalue"><span class="entity-id"><%%= entity.code %></span></div> </div>
+       <div class="entity-field"><div class="entity-fieldlabel"><%= t.language_management.form.description.label %></div> <div class="entity-fieldvalue"><%%= entity.description %></div> </div>
+     </div>
+
+</script>
+
+<!-- Renders the form to edit an element -->
+
+<script type="text/tmpl" id="element_template_form">
+              
+     <form name="element" id="variable_management_form">
+
+        <div class="form-fields">
+        
+          <div class="formrow">
+            <label for="code" class="fieldtitle"><%= t.language_management.form.code.label %> <span class="mandatoryfield">*</span></label>
+            <input type="text" maxlength="2" id="code" name="code" class="fieldcontrol" <%% if (entity) { %> value="<%%= entity.code %>" <%% } %> />
+          </div>
+
+          <div class="formrow">
+            <label for="description" class="fieldtitle"><%= t.language_management.form.description.label %></label>
+            <textarea name="value" id="value" class="fieldcontrol" rows="5"><%% if (entity) { %><%%=entity.description%><%%}%></textarea>
+          </div>
+          <p style="text-align:right"> <span id="value_length"></span> <%= t.available_chars %> </p>
+         
+        </div>
+        
+        <div class="bottom-navigation-bar navigation-bar">
+             <div class="navigation-bar-nav-buttons">
+                <input type="button" class="cancel-entity-button action-button entity-management-button" value="<%=t.entitymanagement.cancel%>"/>
+                <%% if (entity) { %>
+                  <input type="submit" class="update-entity-button action-button entity-management-button" value="<%=t.entitymanagement.update%>"/>
+                <%% } 
+                   else { %>
+                  <input type="submit" class="create-entity-button action-button entity-management-button" value="<%=t.entitymanagement.create%>"/>
+                <%% } %>
+             </div>
+        </div>
+     
+     </form>
+     
+
+</script>
+
+
+<script type="text/javascript">
+ 
+ require(['jquery', 'YSDEntityManagement', 'YSDForms', 'jquery.validate'], function($, EntityManagement, YSDForms) {
+
+ 
+  function LanguageHook() {
+ 	   
+    this.entityKey = function(entity) {
+      return entity.code;
+    }
+
+    this.onEdit = function(entity) {
+      $('#code').attr('readonly', true);
+      $('#description').focus();  	
+      this.configForm(entity);
+    };
+  
+    this.onNew = function() {
+  	  $('#code').focus();
+  	  this.configForm(null);
+    }
+        
+    this.configForm = function(entity) {
+             
+         // Limit the text area length
+         YSDForms.limit_text_area_content_size(document.getElementById('description'), 64, 
+            function (content_remain) {
+              document.getElementById('description_length').innerHTML = '<strong>' + content_remain + '</strong>';
+            }
+         );    
+
+
+         this.configValidation();
+    	
+    }
+    
+    this.configValidation = function() {
+           	 
+       	 $('#variable_management_form').validate({
+       	  	
+            submitHandler: function(form) 
+            {
+               return false;
+            },
+                 	        	   
+       	    rules : { // rules
+       	       'code': {
+       	         required: true	
+       	       }
+               'description': {
+                 required: true
+               }
+       	    },
+       	    
+       	    messages : { // messages
+       	       'code': {
+       	       	 required : '<%=t.language_management.form.code.required%>'
+       	       }
+               'description': {
+                 required : '<%=t.language_management.form.description.required%>'
+               }
+       	    }
+       	    
+       	  }
+       	 );
+    	
+    	
+    }
+  	
+  };
+  
+  var urls = { 
+  	           query_url  : '/translationlanguages',
+    	         create_url : '/translationlanguage',
+  	           update_url : '/translationlanguage',
+  	           delete_url : '/translationlanguage',
+  	           get_url    : '/translationlanguage'
+  	         };
+  
+  var languageHook = new LanguageHook();
+  var variablesManager = new EntityManagement(urls, 'language', 12, languageHook);
+ 
+ });
+  
+</script>

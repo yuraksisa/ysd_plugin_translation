@@ -2,7 +2,19 @@ translation_menu:
   language: Idioma
 system_admin_menu:
   languages: Idiomes
-content_action_button:
-  translate: Traduir
-aspect:
-  translate: Traduir
+#
+# Language management
+#
+language_management:
+  title: Idiomes
+  description: Idiomes
+  table:
+    code: Codi
+    description: Descripció
+  form:
+    code:
+      label: Codi
+      required: El codi és obligatori
+    description:
+      label: Descripció
+      required: La descripció es obligatòria
