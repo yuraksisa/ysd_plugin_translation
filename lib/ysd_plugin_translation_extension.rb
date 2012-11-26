@@ -16,7 +16,7 @@ module Huasi
     def install(context={})
             
         Model::Translation::TranslationLanguage.first_or_create({:code => 'es'}, 
-                                                                {:description => 'Spanish'}) 
+                                                                {:description => 'Español'}) 
 
         Model::Translation::TranslationLanguage.first_or_create({:code => 'en'}, 
                                                                 {:description => 'English'})                                                       
@@ -39,16 +39,34 @@ module Huasi
       
       app = context[:app]
 
-      menu_items = [{:path => '/system/languages',              
+      menu_items = [{:path => '/configuration/languages',              
                      :options => {:title => app.t.system_admin_menu.languages,
                                   :link_route => "/translationlanguage-management",
                                   :description => 'Manages the translation languages',
                                   :module => :translation,
-                                  :weight => 1}
+                                  :weight => 2}
                     }
                     ]                      
     
     end    
+
+    # ========= Routes ===================
+    
+    # routes
+    #
+    # Define the module routes, that is the url that allow to access the funcionality defined in the module
+    #
+    #
+    def routes(context={})
+    
+      routes = [{:path => '/translationlanguage-management',
+                 :regular_expression => /^\/translationlanguage-management/, 
+                 :title => 'Languages', 
+                 :description => 'Manages the site languages',
+                 :fit => 1,
+                 :module => :translation }]
+      
+    end
 
     # ========= Blocks =====================
 
