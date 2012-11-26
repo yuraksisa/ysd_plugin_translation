@@ -19,13 +19,19 @@ module Sinatra
         #
         # Retrieve translation languages
         #
-        app.post "/translationlanguages" do
-             
-          data, total = Model::Translation::TranslationLanguage.find_all
+        ["/translationlanguages", "/translationlanguages/page/:page"].each do |path|
         
-          status 200
-          content_type :json
-          {:data => data, :summary => {:total => total}}.to_json
+          app.post path do
+             
+            page = params[:page].to_i || 1
+            limit = 12
+            offset = (page-1) * 12
+
+            data, total = Model::Translation::TranslationLanguage.find_all(:limit => limit, :offset => offset)
+        
+            status 200
+            content_type :json
+            {:data => data, :summary => {:total => total}}.to_json
         
         end
                 
