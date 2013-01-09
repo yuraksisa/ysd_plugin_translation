@@ -46,7 +46,7 @@ module Sinatra
           language_request = JSON.parse(URI.unescape(request.body.read))
           
           # Creates the new language
-          language = Model::Translation::Language.new(language_request)
+          language = Model::Translation::TranslationLanguage.new(language_request)
           language.save
           
           status 200

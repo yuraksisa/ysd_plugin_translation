@@ -7,7 +7,8 @@ system_admin_menu:
 #
 language_management:
   title: Idiomas
-  description: Idiomas
+  description: >
+               <p>Aquí se definen los idiomas en lo que estará disponible el sitio web.</p>
   table:
     code: Código
     description: Descripción
