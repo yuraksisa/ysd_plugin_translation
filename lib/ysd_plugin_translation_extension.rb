@@ -1,6 +1,9 @@
 # encoding: utf-8
 require 'ysd-plugins_viewlistener' unless defined?Plugins::ViewListener
 require 'ysd_md_translatable'
+require 'ysd_md_configuration' unless defined?SystemConfiguration::Variable
+require 'ysd_md_cms' unless defined?Site::Menu
+require 'ysd_core_themes' unless defined?Themes::ThemeManager
 
 #
 # Site Extension
@@ -17,13 +20,13 @@ module Huasi
     def install(context={})
             
         Model::Translation::TranslationLanguage.first_or_create({:code => 'es'}, 
-                                                                {:description => 'Español'}) 
+          {:description => 'Español'}) 
 
         Model::Translation::TranslationLanguage.first_or_create({:code => 'en'}, 
-                                                                {:description => 'English'})                                                       
+          {:description => 'English'})                                                       
        
         SystemConfiguration::Variable.first_or_create({:name => 'default_language'}, 
-                                                      {:value => 'es', :description => 'Default site language', :module => :translation}) 
+          {:value => 'es', :description => 'Default site language', :module => :translation}) 
        
                                                               
     end
@@ -115,18 +118,14 @@ module Huasi
         when 'translation_menu'
 
             locale = app.session[:locale] || SystemConfiguration::Variable.get_value('default_language')
-            
             session_language = ::Model::Translation::TranslationLanguage.get(locale)
 
-            # Defines the profile menu
             menu_translation = Site::Menu.new({:name => 'translation_menu', 
                                                :title => 'Translation menu', 
                                                :description => 'Language translation menu'})
-          
             menu_item_translation = Site::MenuItem.new({:title => "#{app.t.translation_menu.language}: #{session_language.description}", 
                                                         :module => :translation,
                                                         :menu => menu_translation})
-          
             menu_translation.menu_items << menu_item_translation
           
             ::Model::Translation::TranslationLanguage.all.each do |translation_language|
@@ -142,9 +141,7 @@ module Huasi
               
             end
                      
-            # Render the menu
             menu_render = SiteRenders::MenuRender.new(menu_translation, context)
-          
             menu_render.render
                   
       end

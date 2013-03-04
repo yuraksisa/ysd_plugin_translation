@@ -13,7 +13,7 @@ module Sinatra
         #
         app.get "/translationlanguage-management" do
           
-          load_page 'translation_language'.to_sym
+          load_page :translation_language
           
         end
         
