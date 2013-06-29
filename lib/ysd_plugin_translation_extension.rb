@@ -94,6 +94,9 @@ module Huasi
     
       [{:name => 'translation_menu',
         :module_name => :translation,
+        :theme => Themes::ThemeManager.instance.selected_theme.name},
+       {:name => 'translation_list',
+        :module_name => :translation,
         :theme => Themes::ThemeManager.instance.selected_theme.name}]
         
     end
@@ -112,13 +115,13 @@ module Huasi
     def block_view(context, block_name)
     
       app = context[:app]
-        
+
+      locale = app.session[:locale] || SystemConfiguration::Variable.get_value('default_language')
+      session_language = ::Model::Translation::TranslationLanguage.get(locale)
+
       case block_name
 
         when 'translation_menu'
-
-            locale = app.session[:locale] || SystemConfiguration::Variable.get_value('default_language')
-            session_language = ::Model::Translation::TranslationLanguage.get(locale)
 
             menu_translation = Site::Menu.new({:name => 'translation_menu', 
                                                :title => 'Translation menu', 
@@ -141,8 +144,23 @@ module Huasi
               
             end
                      
-            menu_render = SiteRenders::MenuRender.new(menu_translation, context)
-            menu_render.render
+            SiteRenders::MenuRender.new(menu_translation, context).render
+
+        when 'translation_list'
+
+            menu_translation_list = Site::Menu.new({:name => 'translation_list',
+              :title => 'Translation list menu',
+              :description => 'Language translation list'})
+
+            Model::Translation::TranslationLanguage.all.each do |translation_language|
+              menu_translation_list.menu_items << Site::MenuItem.new({
+                :title => translation_language.description,
+                :link_route => app.current_path_with_language(translation_language.code),
+                :module => :translation,
+                :menu => menu_translation_list})
+            end
+
+            SiteRenders::MenuRender.new(menu_translation_list, context).render
                   
       end
 

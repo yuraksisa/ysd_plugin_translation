@@ -1,6 +1,6 @@
 require 'json' unless defined?JSON
 require 'uri' unless defined?URI
-require 'ysd_md_translation' unless defined Model::Translation
+require 'ysd_md_translation' unless defined? Model::Translation
 
 module Sinatra
   module YSD
