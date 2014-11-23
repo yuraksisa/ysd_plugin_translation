@@ -97,6 +97,9 @@ module Huasi
         :theme => Themes::ThemeManager.instance.selected_theme.name},
        {:name => 'translation_list',
         :module_name => :translation,
+        :theme => Themes::ThemeManager.instance.selected_theme.name},
+       {:name => 'translation_form',
+        :module_name => :translation,
         :theme => Themes::ThemeManager.instance.selected_theme.name}]
         
     end
@@ -125,7 +128,8 @@ module Huasi
 
             menu_translation = Site::Menu.new({:name => 'translation_menu', 
                                                :title => 'Translation menu', 
-                                               :description => 'Language translation menu'})
+                                               :description => 'Language translation menu',
+                                               :language_in_routes => false})
             menu_item_translation = Site::MenuItem.new({:title => "#{app.t.translation_menu.language}: #{session_language.description}", 
                                                         :module => :translation,
                                                         :menu => menu_translation})
@@ -150,7 +154,8 @@ module Huasi
 
             menu_translation_list = Site::Menu.new({:name => 'translation_list',
               :title => 'Translation list menu',
-              :description => 'Language translation list'})
+              :description => 'Language translation list',
+              :language_in_routes => false})
 
             Model::Translation::TranslationLanguage.all.each do |translation_language|
               menu_translation_list.menu_items << Site::MenuItem.new({
@@ -161,7 +166,29 @@ module Huasi
             end
 
             SiteRenders::MenuRender.new(menu_translation_list, context).render
-                  
+                 
+        when 'translation_form'
+
+            form = <<-HTML
+               <form name="change_language" action="/change-language" method="POST">
+                 <select name="language">
+                   <option name="language" value="en" #{app.session[:locale]=='en'?:'selected="true"':''}>English</option>
+                   <option name="language" value="es" #{app.session[:locale]=='es'?:'selected="true"':''}>Español</option>
+                 </selection>
+                 <input type="hidden" id="url" name="url" value="/"/>
+                 <input type="submit" value="Cambiar"></input>
+               </form>
+               <script type="text/javascript">
+                 require(['jquery'], function($) {
+                   $(document).ready(function() {
+                     $("#url").val(window.location.pathname);
+                     //alert(window.location.href);
+                     //document.forms["change_language"]["url"]=window.location.pathname;
+                   });
+                 });
+               </script>
+            HTML
+
       end
 
     end
