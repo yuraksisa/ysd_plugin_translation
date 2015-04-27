@@ -11,7 +11,7 @@ module Sinatra
         #
         # Translation languages
         #
-        app.get "/translationlanguage-management" do
+        app.get "/admin/languages" do
           
           load_page :translation_language
           

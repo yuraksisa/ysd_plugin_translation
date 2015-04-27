@@ -11,7 +11,7 @@ module Sinatra
         #
         # Get all translation languages
         #
-        app.get "/translationlanguages" do
+        app.get "/api/translationlanguages" do
         
           data = Model::Translation::TranslationLanguage.find_translatable_languages
         
@@ -23,7 +23,7 @@ module Sinatra
         #
         # Retrieve translation languages
         #
-        ["/translationlanguages", "/translationlanguages/page/:page"].each do |path|
+        ["/api/translationlanguages", "/api/translationlanguages/page/:page"].each do |path|
         
           app.post path do
              
@@ -44,7 +44,7 @@ module Sinatra
         #
         # Create a new translation language
         #
-        app.post "/translationlanguage" do
+        app.post "/api/translationlanguage" do
         
           request.body.rewind        
           language_request = JSON.parse(URI.unescape(request.body.read))
@@ -62,7 +62,7 @@ module Sinatra
         #
         # Update a translation language
         #
-        app.put "/translationlanguage" do
+        app.put "/api/translationlanguage" do
         
           request.body.rewind
           language_request = JSON.parse(URI.unescape(request.body.read))
@@ -81,7 +81,7 @@ module Sinatra
         #
         # Delete a translation language
         #
-        app.delete "/translationlanguage" do
+        app.delete "/api/translationlanguage" do
     
           request.body.rewind
           language_request = JSON.parse(URI.unescape(request.body.read))

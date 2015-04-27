@@ -147,15 +147,15 @@
   };
   
   var urls = { 
-  	           query_url  : '/translationlanguages',
-    	         create_url : '/translationlanguage',
-  	           update_url : '/translationlanguage',
-  	           delete_url : '/translationlanguage',
-  	           get_url    : '/translationlanguage'
+  	           query_url  : '/api/translationlanguages',
+    	         create_url : '/api/translationlanguage',
+  	           update_url : '/api/translationlanguage',
+  	           delete_url : '/api/translationlanguage',
+  	           get_url    : '/api/translationlanguage'
   	         };
   
   var languageHook = new LanguageHook();
-  var variablesManager = new EntityManagement(urls, 'language', 12, languageHook);
+  var variablesManager = new EntityManagement(urls, 'language', 12, languageHook, {prefix: '/admin'});
  
  });
   

@@ -45,7 +45,7 @@ module Huasi
 
       menu_items = [{:path => '/configuration/languages',              
                      :options => {:title => app.t.system_admin_menu.languages,
-                                  :link_route => "/translationlanguage-management",
+                                  :link_route => "/admin/languages",
                                   :description => 'Manages the translation languages',
                                   :module => :translation,
                                   :weight => 2}
