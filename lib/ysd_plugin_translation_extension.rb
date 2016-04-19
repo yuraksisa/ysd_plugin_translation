@@ -169,21 +169,30 @@ module Huasi
                  
         when 'translation_form'
 
+            options = ""
+            Model::Translation::TranslationLanguage.all.each do |translation_language|
+              options << <<-OPTION
+                <option name="language" value="#{translation_language.code}" 
+                  #{app.session[:locale] == translation_language.code ? 'selected="true"' : ''}>
+                  #{translation_language.description}
+                </option> 
+              OPTION
+            end
+
             form = <<-HTML
                <form name="change_language" action="/change-language" method="POST">
                  <select name="language">
-                   <option name="language" value="en" #{app.session[:locale]=='en'?:'selected="true"':''}>English</option>
-                   <option name="language" value="es" #{app.session[:locale]=='es'?:'selected="true"':''}>Español</option>
+                   #{options}
                  </selection>
                  <input type="hidden" id="url" name="url" value="/"/>
-                 <input type="submit" value="Cambiar"></input>
                </form>
                <script type="text/javascript">
                  require(['jquery'], function($) {
                    $(document).ready(function() {
                      $("#url").val(window.location.pathname);
-                     //alert(window.location.href);
-                     //document.forms["change_language"]["url"]=window.location.pathname;
+                     $("select[name=language]").bind('change', function(event) {
+                       $(this)[0].form.submit();
+                     });
                    });
                  });
                </script>
