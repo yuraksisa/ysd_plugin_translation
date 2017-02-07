@@ -173,7 +173,7 @@ module Huasi
             Model::Translation::TranslationLanguage.all.each do |translation_language|
               options << <<-OPTION
                 <option name="language" value="#{translation_language.code}" 
-                  #{(app.session[:request_locale] || app.settings.default_locale) == translation_language.code ? 'selected="true"' : ''}>
+                  #{(app.session[:locale] || app.settings.default_locale) == translation_language.code ? 'selected="selected"' : ''}>
                   #{translation_language.description}
                 </option> 
               OPTION
